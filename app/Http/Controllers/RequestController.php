@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Approval;
 use App\Models\PtppRequest;
 use App\Models\User;
 use Illuminate\Http\Request;
@@ -18,6 +17,13 @@ class RequestController extends Controller
         $requestsToMe = PtppRequest::where('to_user_id', $userId)->get();
 
         return view('requests.index', compact('myRequests', 'requestsToMe'));
+    }
+
+    public function showDetail($id)
+    {
+        $request = PtppRequest::with(['fromUser', 'toUser', 'requestDetail', 'approvals.approverUser'])->findOrFail($id);
+
+        return view('requests.detail', compact('request'));
     }
 
     public function showCreate()

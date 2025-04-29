@@ -112,7 +112,7 @@ class ApprovalController extends Controller
             'approved_at' => now(),
         ]);
 
-        return redirect()->back()->with('success', 'Request disetujui oleh pengaju.');
+        return redirect()->back()->with('success', 'Request disetujui oleh pemohon.');
     }
 
     public function handleRequesterReviewReject(PtppRequest $request)
@@ -130,6 +130,6 @@ class ApprovalController extends Controller
             'approved_at' => now(),
         ]);
 
-        return redirect()->back()->with('success', 'Request ditolak oleh pengaju.');
+        return redirect()->back()->with('success', 'Request ditolak oleh pemohon.');
     }
 }

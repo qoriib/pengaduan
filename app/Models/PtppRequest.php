@@ -45,11 +45,11 @@ class PtppRequest extends Model
 
     public function approvals()
     {
-        return $this->hasMany(Approval::class);
+        return $this->hasMany(Approval::class, 'request_id');
     }
 
     public function requestDetail()
     {
-        return $this->hasOne(RequestDetail::class);
+        return $this->hasOne(RequestDetail::class, 'request_id');
     }
 }

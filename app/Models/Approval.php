@@ -32,7 +32,7 @@ class Approval extends Model
         return $this->belongsTo(PtppRequest::class);
     }
 
-    public function approver()
+    public function approverUser()
     {
         return $this->belongsTo(User::class, 'approver_user_id');
     }

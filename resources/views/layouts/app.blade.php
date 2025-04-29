@@ -2,25 +2,27 @@
 <html lang="{{ env('APP_LOCALE', 'id') }}">
 <head>
     <meta charset="UTF-8">
-    <title>@yield('title', 'Sistem Pengaduan')</title>
+    <title>@yield('title', 'Sistem Pengaduan') | Aplikasi PTPP</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.3/css/bootstrap.min.css" integrity="sha512-jnSuA4Ss2PkkikSOLtYs8BlYIeeIK1h99ty4YfvRPAlzr377vr3CXDb7sb7eEEBYjDtcYj+AjBH3FLv5uSJuXg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
     @stack('styles')
 </head>
 <body>
-    <header class="navbar navbar-dark bg-primary">
-        <div class="container d-flex justify-content-between align-items-center">
+    <header class="navbar navbar-dark bg-dark">
+        <div class="container d-flex justify-content-between align-items-center g-5">
             <a class="navbar-brand" href="{{ route('requests.show') }}">
                 Aplikasi PTPP
             </a>
-            <nav class="nav gap-3">
-                <a class="nav-link text-white" href="{{ route('requests.show') }}">
-                    Pengajuan
-                </a>
-                <a class="nav-link text-white" href="{{ route('approval.itm-approval.show') }}">
-                    Persetujuan
-                </a>
-            </nav>
+            @if (Auth::user() && Auth::user()->role === 'ITM')
+                <nav class="nav gap-3">
+                    <a class="nav-link text-white" href="{{ route('requests.show') }}">
+                        Permohonan
+                    </a>
+                    <a class="nav-link text-white" href="{{ route('approval.itm-approval.show') }}">
+                        Persetujuan
+                    </a>
+                </nav>
+            @endif
             <div class="d-flex align-items-center">
                 <span class="text-white me-3">
                     {{ Auth::user()->name ?? 'Guest' }}
@@ -35,7 +37,7 @@
         </div>
     </header>
     
-    <div class="container gap-5 py-4">
+    <div class="container g-5 py-4">
         @yield('content')
     </div>
     <footer class="bg-light py-3 mt-auto">

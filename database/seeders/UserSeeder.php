@@ -16,51 +16,51 @@ class UserSeeder extends Seeder
         $users = [
             [
                 'name' => 'MPS User',
-                'email' => 'mps@mail.com',
+                'email' => 'mps@ptpp.com',
                 'role' => 'MPS',
-                'password' => Hash::make('password'), // Default password
+                'password' => Hash::make('ptpp#1234'), // Default password
             ],
             [
                 'name' => 'QQ User',
-                'email' => 'qq@mail.com',
+                'email' => 'qq@ptpp.com',
                 'role' => 'QQ',
-                'password' => Hash::make('password'),
+                'password' => Hash::make('ptpp#1234'),
             ],
             [
                 'name' => 'SSGA User',
-                'email' => 'ssga@mail.com',
+                'email' => 'ssga@ptpp.com',
                 'role' => 'SSGA',
-                'password' => Hash::make('password'),
+                'password' => Hash::make('ptpp#1234'),
             ],
             [
                 'name' => 'LM User',
-                'email' => 'lm@mail.com',
+                'email' => 'lm@ptpp.com',
                 'role' => 'LM',
-                'password' => Hash::make('password'),
+                'password' => Hash::make('ptpp#1234'),
             ],
             [
                 'name' => 'Distr User',
-                'email' => 'distr@mail.com',
+                'email' => 'distr@ptpp.com',
                 'role' => 'Distr',
-                'password' => Hash::make('password'),
+                'password' => Hash::make('ptpp#1234'),
             ],
             [
                 'name' => 'CR User',
-                'email' => 'cr@mail.com',
+                'email' => 'cr@ptpp.com',
                 'role' => 'CR',
-                'password' => Hash::make('password'),
+                'password' => Hash::make('ptpp#1234'),
             ],
             [
                 'name' => 'HSSE User',
-                'email' => 'hsse@mail.com',
+                'email' => 'hsse@ptpp.com',
                 'role' => 'HSSE',
-                'password' => Hash::make('password'),
+                'password' => Hash::make('ptpp#1234'),
             ],
             [
                 'name' => 'ITM User',
-                'email' => 'itm@mail.com',
+                'email' => 'itm@ptpp.com',
                 'role' => 'ITM',
-                'password' => Hash::make('password'),
+                'password' => Hash::make('ptpp#1234'),
             ],
         ];
 

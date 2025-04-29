@@ -14,6 +14,7 @@ Route::middleware('auth')->group(function () {
     Route::get('/requests', [RequestController::class, 'showUserRequests'])->name('requests.show');
     Route::get('/requests/create', [RequestController::class, 'showCreate'])->name('requests.create.show');
     Route::post('/requests/create', [RequestController::class, 'handleCreate'])->name('requests.create.handle');
+    Route::get('/requests/detail/{id}', [RequestController::class, 'showDetail'])->name('requests.detail.show');
     Route::get('/requests/detail-input/{request}', [RequestDetailController::class, 'create'])->name('request-details.create.show');
     Route::post('/requests/detail-input/{request}', [RequestDetailController::class, 'store'])->name('request-details.create.handle');
 
