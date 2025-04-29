@@ -10,7 +10,7 @@
 <body class="bg-light d-flex align-items-center min-vh-100">
     <div class="container g-5">
         <div class="row justify-content-center">
-            <div class="col-md-5">
+            <div class="col-md-7 col-lg-5">
                 @yield('content')
             </div>
         </div>

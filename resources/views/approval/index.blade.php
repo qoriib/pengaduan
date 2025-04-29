@@ -1,5 +1,7 @@
 @extends('layouts.app')
 
+@section('title', 'Persetujuan Permohonan (ITM)')
+
 @section('content')
     <h2 class="mb-4">Persetujuan Permohonan (ITM)</h2>
 

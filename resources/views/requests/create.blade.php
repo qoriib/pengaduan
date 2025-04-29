@@ -1,5 +1,7 @@
 @extends('layouts.app')
 
+@section('title', 'Permohonan Baru')
+
 @section('content')
     <h2 class="mb-4">Permohonan Baru</h2>
 

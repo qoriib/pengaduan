@@ -1,5 +1,7 @@
 @extends('layouts.print')
 
+@section('title', 'Print Permohonan')
+
 @section('content')
 <style>
     @media print {
@@ -160,7 +162,6 @@
                 $approvalResolver = $request->approvals()->where('stage', 'executor_response')->first();
                 $approvalFinal = $request->approvals()->where('stage', 'itm_final_review')->first();
                 $requestDetail = $request->requestDetail()->first();
-                $resolver = $requestDetail->resolver()->first();
             @endphp
             <td>
                 <span class="text-nowrap">Penanggung Jawab</span><br>
@@ -173,7 +174,7 @@
                             height: 60
                         });
                     </script>
-                    {{ $approvalResolver->approverUser()->first()->name }} <br>
+                    {{ $requestDetail->resolver()->first()->name }} <br>
                 @endif
             </td>
             <td>

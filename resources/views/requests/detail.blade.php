@@ -1,5 +1,7 @@
 @extends('layouts.app')
 
+@section('title', 'Detail Permintaan')
+
 @section('content')
     <h2 class="mb-4">Detail Permintaan - <span class="font-monospace">{{ $request->no_form }}</span></h2>
     <div class="vstack gap-4 mb-4">
