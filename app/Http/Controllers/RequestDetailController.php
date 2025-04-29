@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Helpers\QrSignatureHelper;
 use App\Models\Approval;
 use App\Models\PtppRequest;
 use App\Models\RequestDetail;
@@ -10,7 +11,7 @@ use Illuminate\Support\Facades\Auth;
 
 class RequestDetailController extends Controller
 {
-    public function create(PtppRequest $request)
+    public function showCreate(PtppRequest $request)
     {
         if ($request->to_user_id !== Auth::id()) {
             abort(403, 'Unauthorized');
@@ -19,7 +20,7 @@ class RequestDetailController extends Controller
         return view('request_details.create', compact('request'));
     }
 
-    public function store(Request $req, PtppRequest $request)
+    public function handleCreate(Request $req, PtppRequest $request)
     {
         $validated = $req->validate([
             'received_at' => 'required|date',
@@ -42,9 +43,7 @@ class RequestDetailController extends Controller
             'approver_user_id' => Auth::id(),
             'stage' => 'executor_response',
             'approved_at' => now(),
-            'qr_code_path' => null,
-            'verification_status' => null,
-            'next_verification_target' => null,
+            'qr_code_content' => QrSignatureHelper::generateForStage($request, Auth::user(), 'requester_review'),
         ]);
 
         $request->update(['status' => 'waiting_requester_review']);

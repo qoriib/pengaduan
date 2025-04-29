@@ -56,6 +56,7 @@
         </div>
         <div>
             <button type="submit" class="btn btn-success">Ajukan</button>
+            <a href="{{ route('requests.show') }}" class="btn btn-secondary">Kembali</a>
         </div>
     </form>
 @endsection

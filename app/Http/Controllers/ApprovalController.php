@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Helpers\QrSignatureHelper;
 use App\Models\Approval;
 use App\Models\PtppRequest;
 use Illuminate\Support\Facades\Auth;
@@ -29,6 +30,7 @@ class ApprovalController extends Controller
             'approver_user_id' => Auth::id(),
             'stage' => 'itm_initial_review',
             'approved_at' => now(),
+            'qr_code_content' => QrSignatureHelper::generateForStage($request, Auth::user(), 'itm_initial_review'),
         ]);
 
         return redirect()->back()->with('success', 'Request disetujui dan dikirim ke executor.');
@@ -48,23 +50,21 @@ class ApprovalController extends Controller
     {
         $request = PtppRequest::findOrFail($id);
 
-        // Validasi status harus menunggu persetujuan final ITM
         if ($request->status !== 'waiting_itm_final_review') {
             return back()->with('error', 'Request tidak berada dalam status menunggu persetujuan akhir.');
         }
 
-        // Update request status menjadi selesai / close
         $request->update([
             'status' => 'completed',
         ]);
 
-        // Tambahkan entri ke tabel approvals sebagai final approve
         Approval::create([
             'request_id' => $request->id,
             'approver_user_id' => Auth::id(),
             'stage' => 'itm_final_review',
             'approved_at' => now(),
             'verification_status' => 'Close',
+            'qr_code_content' => QrSignatureHelper::generateForStage($request, Auth::user(), 'itm_final_review'),
         ]);
 
         return back()->with('success', 'Request telah disetujui secara final oleh ITM.');
@@ -74,24 +74,22 @@ class ApprovalController extends Controller
     {
         $request = PtppRequest::findOrFail($id);
 
-        // Validasi status harus menunggu persetujuan final ITM
         if ($request->status !== 'waiting_itm_final_review') {
             return back()->with('error', 'Request tidak berada dalam status menunggu persetujuan akhir.');
         }
 
-        // Update status menjadi rejected
         $request->update([
             'status' => 'rejected',
         ]);
 
-        // Tambahkan entri ke tabel approvals sebagai reject final
         Approval::create([
             'request_id' => $request->id,
             'approver_user_id' => Auth::id(),
             'stage' => 'itm_final_review',
             'approved_at' => now(),
             'verification_status' => 'Follow Up',
-            'next_verification_target' => now()->addDays(30), // misalnya 30 hari ke depan
+            'next_verification_target' => now()->addDays(30),
+            'qr_code_content' => QrSignatureHelper::generateForStage($request, Auth::user(), 'itm_final_review'),
         ]);
 
         return back()->with('success', 'Request telah ditolak oleh ITM pada tahap akhir.');
@@ -99,17 +97,16 @@ class ApprovalController extends Controller
 
     public function handleRequesterReviewApprove(PtppRequest $request)
     {
-        // Update status request
         $request->update([
-            'status' => 'waiting_itm_final_review', // lanjut ke ITM Final Approval
+            'status' => 'waiting_itm_final_review',
         ]);
 
-        // Tambah entry approval
         Approval::create([
             'request_id' => $request->id,
             'approver_user_id' => Auth::id(),
             'stage' => 'requester_review',
             'approved_at' => now(),
+            'qr_code_content' => QrSignatureHelper::generateForStage($request, Auth::user(), 'requester_review'),
         ]);
 
         return redirect()->back()->with('success', 'Request disetujui oleh pemohon.');
@@ -117,17 +114,16 @@ class ApprovalController extends Controller
 
     public function handleRequesterReviewReject(PtppRequest $request)
     {
-        // Update status request
         $request->update([
             'status' => 'rejected',
         ]);
 
-        // Tambah entry approval
         Approval::create([
             'request_id' => $request->id,
             'approver_user_id' => Auth::id(),
             'stage' => 'requester_review',
             'approved_at' => now(),
+            'qr_code_content' => QrSignatureHelper::generateForStage($request, Auth::user(), 'requester_review'),
         ]);
 
         return redirect()->back()->with('success', 'Request ditolak oleh pemohon.');

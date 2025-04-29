@@ -22,7 +22,7 @@ return new class extends Migration
                 'itm_final_review' // final approve
             ]);
             $table->timestamp('approved_at')->nullable();
-            $table->string('qr_code_path')->nullable(); // path file QR signature
+            $table->json('qr_code_content')->nullable(); // path file QR signature
             $table->enum('verification_status', ['Close', 'Follow Up'])->nullable();
             $table->date('next_verification_target')->nullable(); // Jika follow up
             $table->timestamps();

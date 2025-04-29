@@ -1,53 +1,52 @@
 @extends('layouts.app')
 
 @section('content')
-<div class="container">
-    <h3>Input Rincian Perbaikan</h3>
+    <h2 class="mb-4">Rincian Tindakan</h2>
 
-    <form action="{{ route('request-details.create.handle', $request->id) }}" method="POST">
+    <form action="{{ route('request-details.create.handle', $request->id) }}" method="POST" class="vstack gap-3">
         @csrf
-
-        <div class="mb-3">
-            <label class="form-label">Tanggal Terima CAR PAR</label>
+        <div>
+            <label class="form-label">Tanggal Terima</label>
             <input type="date" name="received_at" class="form-control" required>
         </div>
-
-        <div class="mb-3">
-            <label class="form-label">Tindakan Sementara</label>
+        <div>
+            <label class="form-label">Perbaikan / Tindakan Sementara</label>
             <textarea name="temporary_repair" class="form-control"></textarea>
         </div>
-
-        <div class="mb-3">
+        <div>
             <label class="form-label">Analisa Penyebab</label>
             <textarea name="cause_analysis" class="form-control" required></textarea>
         </div>
-
-        <div class="mb-3">
-            <label class="form-label">Tindakan Perbaikan & Pencegahan</label>
+        <div>
+            <label class="form-label">Tindakan Perbaikan dan Pencegahan</label>
             <textarea name="correction_action" class="form-control" required></textarea>
         </div>
-
-        <div class="mb-3">
+        <div>
             <label class="form-label">PIC</label>
             <input type="text" name="pic" class="form-control" required>
         </div>
-
-        <div class="mb-3">
+        <div>
             <label class="form-label">Waktu Pelaksanaan</label>
             <input type="date" name="execution_time" class="form-control" required>
         </div>
-
-        <div class="mb-3">
-            <label class="form-label">Dokumen Direvisi</label>
-            <input type="text" name="document_revised" class="form-control">
+        <div>
+            <label class="form-label">Dokumen yang Direvisi</label>
+            <input type="text" name="document_revised" list="document-options" class="form-control">
+            <datalist id="document-options">
+                <option value="Pedoman/Manual">
+                <option value="TKO">
+                <option value="TKI">
+                <option value="TKPA">
+                <option value="Formulir">
+            </datalist>
         </div>
-
-        <div class="mb-3">
+        <div>
             <label class="form-label">Target Waktu Verifikasi</label>
             <input type="date" name="target_verification_date" class="form-control">
         </div>
-
-        <button type="submit" class="btn btn-primary">Kirim</button>
+        <div>
+            <button type="submit" class="btn btn-primary">Kirim</button>
+            <a href="{{ route('requests.show') }}" class="btn btn-secondary">Kembali</a>
+        </div>
     </form>
-</div>
 @endsection

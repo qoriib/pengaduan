@@ -10,9 +10,9 @@
         </a>
     </div>
     <div class="vstack gap-4">
-        <div class="card shadow-sm">
+        <div class="card">
             <div class="card-header">
-                <strong>Request yang Saya Ajukan</strong>
+                <strong>Permohonan yang Saya Ajukan</strong>
             </div>
             <div class="card-body">
                 @if ($myRequests->count())
@@ -40,10 +40,10 @@
                                                     <span class="badge bg-warning text-dark">Menunggu Persetujuan Awal ITM</span>
                                                     @break
                                                 @case('waiting_executor')
-                                                    <span class="badge bg-primary">Menunggu Pelaksana</span>
+                                                    <span class="badge bg-primary">Menunggu Tindakan</span>
                                                     @break
                                                 @case('waiting_requester_review')
-                                                    <span class="badge bg-success">Sudah Ditintaklanjuti</span>
+                                                    <span class="badge bg-success">Sudah Ditindak</span>
                                                     <span class="badge bg-warning text-dark">Menunggu Persetujuan Pemohon</span>
                                                     @break
                                                 @case('waiting_itm_final_review')
@@ -81,13 +81,13 @@
                         </table>
                     </div>
                 @else
-                    <p class="text-center">Belum ada request yang Anda ajukan.</p>
+                    <p class="text-muted text-center mb-0">Belum ada permohonan yang Anda ajukan.</p>
                 @endif
             </div>
         </div>
-        <div class="card shadow-sm">
+        <div class="card">
             <div class="card-header">
-                <strong>Request Masuk untuk Saya</strong>
+                <strong>Permohonan Masuk untuk Saya</strong>
             </div>
             <div class="card-body">
                 @if ($requestsToMe->count())
@@ -115,10 +115,11 @@
                                                     <span class="badge bg-warning text-dark">Menunggu Persetujuan Awal ITM</span>
                                                     @break
                                                 @case('waiting_executor')
-                                                    <span class="badge bg-primary">Perlu Tindak Lanjut</span>
+                                                    <span class="badge bg-primary">Perlu Tindakan</span>
                                                     @break
                                                 @case('waiting_requester_review')
-                                                    <span class="badge bg-success">Sudah Ditindaklanjuti</span>
+                                                    <span class="badge bg-success">Sudah Ditindak</span>
+                                                    <span class="badge bg-warning text-dark">Menunggu Persetujuan Pemohon</span>
                                                     @break
                                                 @case('waiting_itm_final_review')
                                                     <span class="badge bg-warning text-dark">Menunggu Persetujuan Akhir ITM</span>
@@ -137,7 +138,7 @@
                                         <td class="text-nowrap text-center">
                                             @if ($request->status === 'waiting_executor' && $request->to_user_id === Auth::id())
                                                 <a href="{{ route('request-details.create.show', $request->id) }}" class="btn btn-sm btn-primary">
-                                                    Tindak Lanjuti
+                                                    Tindak
                                                 </a>
                                             @endif
                                             <a href="{{ route('requests.detail.show', $request->id) }}" class="btn btn-sm btn-outline-info">Detail</a>
@@ -148,7 +149,7 @@
                         </table>
                     </div>
                 @else
-                    <p class="text-center">Tidak ada request masuk untuk Anda.</p>
+                    <p class="text-muted text-center mb-0">Tidak ada permohonan masuk untuk Anda.</p>
                 @endif
             </div>
         </div>

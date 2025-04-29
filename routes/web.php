@@ -15,8 +15,9 @@ Route::middleware('auth')->group(function () {
     Route::get('/requests/create', [RequestController::class, 'showCreate'])->name('requests.create.show');
     Route::post('/requests/create', [RequestController::class, 'handleCreate'])->name('requests.create.handle');
     Route::get('/requests/detail/{id}', [RequestController::class, 'showDetail'])->name('requests.detail.show');
-    Route::get('/requests/detail-input/{request}', [RequestDetailController::class, 'create'])->name('request-details.create.show');
-    Route::post('/requests/detail-input/{request}', [RequestDetailController::class, 'store'])->name('request-details.create.handle');
+    Route::get('/requests/print/{request}', [RequestController::class, 'printRequest'])->name('requests.print');
+    Route::get('/requests/detail-input/{request}', [RequestDetailController::class, 'showCreate'])->name('request-details.create.show');
+    Route::post('/requests/detail-input/{request}', [RequestDetailController::class, 'handleCreate'])->name('request-details.create.handle');
 
     Route::put('/approval/requester-review/{request}/approve', [ApprovalController::class, 'handleRequesterReviewApprove'])->name('approval.requester-review-approve.handle');
     Route::put('/approval/requester-review/{request}/reject', [ApprovalController::class, 'handleRequesterReviewReject'])->name('approval.requester-review-reject.handle');

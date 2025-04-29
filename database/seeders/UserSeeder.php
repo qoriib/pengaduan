@@ -18,49 +18,49 @@ class UserSeeder extends Seeder
                 'name' => 'MPS User',
                 'email' => 'mps@ptpp.com',
                 'role' => 'MPS',
-                'password' => Hash::make('ptpp#1234'), // Default password
+                'password' => Hash::make('Ptpp#1234'), // Default password
             ],
             [
                 'name' => 'QQ User',
                 'email' => 'qq@ptpp.com',
                 'role' => 'QQ',
-                'password' => Hash::make('ptpp#1234'),
+                'password' => Hash::make('Ptpp#1234'),
             ],
             [
                 'name' => 'SSGA User',
                 'email' => 'ssga@ptpp.com',
                 'role' => 'SSGA',
-                'password' => Hash::make('ptpp#1234'),
+                'password' => Hash::make('Ptpp#1234'),
             ],
             [
                 'name' => 'LM User',
                 'email' => 'lm@ptpp.com',
                 'role' => 'LM',
-                'password' => Hash::make('ptpp#1234'),
+                'password' => Hash::make('Ptpp#1234'),
             ],
             [
                 'name' => 'Distr User',
                 'email' => 'distr@ptpp.com',
                 'role' => 'Distr',
-                'password' => Hash::make('ptpp#1234'),
+                'password' => Hash::make('Ptpp#1234'),
             ],
             [
                 'name' => 'CR User',
                 'email' => 'cr@ptpp.com',
                 'role' => 'CR',
-                'password' => Hash::make('ptpp#1234'),
+                'password' => Hash::make('Ptpp#1234'),
             ],
             [
                 'name' => 'HSSE User',
                 'email' => 'hsse@ptpp.com',
                 'role' => 'HSSE',
-                'password' => Hash::make('ptpp#1234'),
+                'password' => Hash::make('Ptpp#1234'),
             ],
             [
                 'name' => 'ITM User',
                 'email' => 'itm@ptpp.com',
                 'role' => 'ITM',
-                'password' => Hash::make('ptpp#1234'),
+                'password' => Hash::make('Ptpp#1234'),
             ],
         ];
 

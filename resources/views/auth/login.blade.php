@@ -3,8 +3,8 @@
 @section('title', 'Login')
 
 @section('content')
-<div class="card shadow-sm p-4">
-    <h3 class="text-center mb-4">Login</h3>
+<div class="card py-5 px-4">
+    <h3 class="text-center mb-4">Login ke Sistem</h3>
 
     @if ($errors->any())
         <div class="alert alert-danger">
@@ -16,10 +16,9 @@
         </div>
     @endif
 
-    <form method="POST" action="{{ url('/login') }}">
+    <form method="POST" action="{{ route('login.handle') }}" class="vstack gap-3">
         @csrf
-
-        <div class="mb-3">
+        <div>
             <label for="email" class="form-label">Email address</label>
             <input 
                 type="email" 
@@ -34,8 +33,7 @@
                 <div class="invalid-feedback">{{ $message }}</div>
             @enderror
         </div>
-
-        <div class="mb-4">
+        <div>
             <label for="password" class="form-label">Password</label>
             <input 
                 type="password" 
@@ -48,11 +46,7 @@
                 <div class="invalid-feedback">{{ $message }}</div>
             @enderror
         </div>
-
-        <div class="d-grid mb-3">
-            <button type="submit" class="btn btn-primary">Login</button>
-        </div>
-
+        <button type="submit" class="btn btn-primary">Login</button>
     </form>
 </div>
 @endsection

@@ -16,7 +16,7 @@ class Approval extends Model
         'approver_user_id',
         'stage',
         'approved_at',
-        'qr_code_path',
+        'qr_code_content',
         'verification_status',
         'next_verification_target',
     ];

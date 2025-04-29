@@ -24,7 +24,7 @@ class PtppRequestFactory extends Factory
             'from_user_id' => $fromUser->id,
             'to_user_id' => $toUser->id,
             'area_location' => $this->faker->city(),
-            'source_of_nonconformity' => json_encode([$this->faker->randomElement(['Audit', 'Keluhan Pelanggan', 'Tinjauan Manajemen', 'Survey Pelanggan', 'Usulan/Saran'])]),
+            'source_of_nonconformity' => json_encode($this->faker->randomElements(['Audit', 'Keluhan Pelanggan', 'Tinjauan Manajemen', 'Survey Pelanggan', 'Usulan atau Saran'])),
             'nonconformity_description' => $this->faker->paragraph(),
             'requirement_violated' => $this->faker->sentence(),
             'category' => $this->faker->randomElement(['Temuan', 'Observasi']),

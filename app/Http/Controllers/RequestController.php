@@ -67,4 +67,9 @@ class RequestController extends Controller
 
         return redirect()->route('requests.show')->with('success', 'Request berhasil dikirim, menunggu ITM review.');
     }
+
+    public function printRequest(PtppRequest $request)
+    {
+        return view('requests.print', compact('request'));
+    }
 }

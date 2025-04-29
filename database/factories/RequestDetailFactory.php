@@ -27,7 +27,7 @@ class RequestDetailFactory extends Factory
             'correction_action' => $this->faker->paragraph(2),
             'pic' => $this->faker->name(),
             'execution_time' => $this->faker->dateTimeBetween('+1 days', '+2 weeks'),
-            'document_revised' => $this->faker->optional()->word(),
+            'document_revised' => $this->faker->randomElement(['Pedoman/Manual', 'TKO', 'TKO', 'TKPA', 'Formulir']),
             'target_verification_date' => $this->faker->dateTimeBetween('+2 weeks', '+1 month'),
         ];
     }
