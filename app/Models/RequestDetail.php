@@ -9,6 +9,8 @@ class RequestDetail extends Model
 {
     use HasFactory;
 
+    protected $table = 'request_details';
+
     protected $fillable = [
         'request_id',
         'resolver_user_id',

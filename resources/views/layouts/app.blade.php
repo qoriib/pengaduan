@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="id">
+<html lang="{{ env('APP_LOCALE', 'id') }}">
 <head>
     <meta charset="UTF-8">
     <title>@yield('title', 'Sistem Pengaduan')</title>
@@ -8,9 +8,41 @@
     @stack('styles')
 </head>
 <body>
-    <div class="container mb-5">
+    <header class="navbar navbar-dark bg-primary">
+        <div class="container d-flex justify-content-between align-items-center">
+            <a class="navbar-brand" href="{{ route('requests.show') }}">
+                Aplikasi PTPP
+            </a>
+            <nav class="nav gap-3">
+                <a class="nav-link text-white" href="{{ route('requests.show') }}">
+                    Pengajuan
+                </a>
+                <a class="nav-link text-white" href="{{ route('approval.itm-approval.show') }}">
+                    Persetujuan
+                </a>
+            </nav>
+            <div class="d-flex align-items-center">
+                <span class="text-white me-3">
+                    {{ Auth::user()->name ?? 'Guest' }}
+                </span>
+                <form action="{{ route('logout.handle') }}" method="POST" class="d-inline">
+                    @csrf
+                    <button type="submit" class="btn btn-outline-light btn-sm">
+                        Logout
+                    </button>
+                </form>
+            </div>
+        </div>
+    </header>
+    
+    <div class="container gap-5 py-4">
         @yield('content')
     </div>
+    <footer class="bg-light py-3 mt-auto">
+        <div class="container text-center">
+            <small class="text-muted">© {{ date('Y') }} Hak Cipta Dilindungi.</small>
+        </div>
+    </footer>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.3/js/bootstrap.bundle.min.js" integrity="sha512-7Pi/otdlbbCR+LnW+F7PwFcSDJOuUJB3OxtEHbg4vSMvzvJjde4Po1v4BR9Gdc9aXNUNFVUY+SK51wWT8WF0Gg==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
     @stack('scripts')
 </body>

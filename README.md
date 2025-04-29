@@ -1,61 +1,113 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
+## \*_Skenario _
 
-<p align="center">
-<a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+1. **Semua user** bisa **input request** ke **user lainnya** (pilih dari daftar: MPS, QQ, CR, Distr., SSGA, HSSE, dst.).
+2. **Hanya ITM** yang **review & approve** request **sebelum** dikirim ke user tujuan.
+3. **Setelah approved oleh ITM**:
 
-## About Laravel
+    - Request masuk ke **user tujuan** (misal QQ).
+    - User tujuan (QQ) akan **mengisi rincian perbaikan** + upload dokumen foto.
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+4. **Setelah QQ submit rincian perbaikan**:
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+    - **User yang request awal** (MPS) **review** rincian perbaikan itu.
+    - Jika setuju, dia "approve".
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+5. **Setelah MPS approve rincian**:
 
-## Learning Laravel
+    - **Masuk ke ITM lagi** untuk **final approve**.
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
+6. **Setelah ITM final approve**:
+    - Dokumen PDF dihasilkan, lengkap dengan tanda tangan QR semua pihak yang approve.
 
-You may also try the [Laravel Bootcamp](https://bootcamp.laravel.com), where you will be guided through building a modern Laravel application from scratch.
+---
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains thousands of video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+## **Alur Status Secara Bertahap**
 
-## Laravel Sponsors
+| Status                     | Penjelasan                                                        |
+| :------------------------- | :---------------------------------------------------------------- |
+| `waiting_itm_review`       | Baru diinput, menunggu ITM approve                                |
+| `waiting_executor`         | Sudah approve ITM, menunggu QQ (atau user tujuan) mengisi rincian |
+| `waiting_requester_review` | QQ sudah submit rincian, nunggu yang request awal (MPS) approve   |
+| `waiting_itm_final`        | Setelah MPS approve rincian, nunggu ITM final approve             |
+| `completed`                | Selesai semua dan PDF keluar                                      |
+| `rejected`                 | Ditolak pada salah satu tahap                                     |
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the [Laravel Partners program](https://partners.laravel.com).
+---
 
-### Premium Partners
+## **Struktur Utama Database (Diperbarui)**
 
-- **[Vehikl](https://vehikl.com/)**
-- **[Tighten Co.](https://tighten.co)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Curotec](https://www.curotec.com/services/technologies/laravel/)**
-- **[DevSquad](https://devsquad.com/hire-laravel-developers)**
-- **[Redberry](https://redberry.international/laravel-development/)**
-- **[Active Logic](https://activelogic.com)**
+| Table             | Fields                                                                                                                          |
+| :---------------- | :------------------------------------------------------------------------------------------------------------------------------ |
+| `users`           | id, name, email, password, role                                                                                                 |
+| `requests`        | id, title, description, from_user_id, to_user_id, status, created_at, updated_at                                                |
+| `request_details` | id, request_id, resolver_user_id, description, photo_path, submitted_at                                                         |
+| `approvals`       | id, request_id, approver_user_id, stage (itm_review, executor_response, requester_review, itm_final), qr_code_path, approved_at |
 
-## Contributing
+```php
+Schema::create('users', function (Blueprint $table) {
+   $table->id();
+   $table->string('name');
+   $table->string('email')->unique();
+   $table->timestamp('email_verified_at')->nullable();
+   $table->string('password');
+   $table->enum('role', ['MPS', 'QQ', 'SSGA', 'LM', 'Distr', 'CR', 'HSSE', 'ITM']);
+   $table->rememberToken();
+   $table->timestamps();
+});
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+Schema::create('requests', function (Blueprint $table) {
+   $table->id();
+   $table->string('no_form'); // No. PND646000/YYYY
+   $table->date('request_date'); // Tgl : dd/mm/yyyy
+   $table->foreignId('from_user_id')->constrained('users')->onDelete('cascade');
+   $table->foreignId('to_user_id')->constrained('users')->onDelete('cascade');
+   $table->string('area_location')->nullable(); // Area / Lokasi Temuan
+   $table->json('source_of_nonconformity')->nullable(); // Keluhan, Audit, dll
+   $table->text('nonconformity_description'); // Ketidaksesuaian ditemukan
+   $table->text('requirement_violated')->nullable(); // Persyaratan yang dilanggar
+   $table->enum('category', ['Temuan', 'Observasi'])->nullable(); // Kategori
+   $table->date('due_date')->nullable(); // Batas waktu jawab
+   $table->string('illustration_photo_path')->nullable(); // Upload foto/ilustrasi
+   $table->enum('status', [
+         'waiting_itm_initial_review',
+         'waiting_executor',
+         'waiting_requester_review',
+         'waiting_itm_final_review',
+         'completed',
+         'rejected'
+   ])->default('waiting_itm_initial_review');
+   $table->timestamps();
+});
 
-## Code of Conduct
+Schema::create('request_details', function (Blueprint $table) {
+   $table->id();
+   $table->foreignId('request_id')->constrained('requests')->onDelete('cascade');
+   $table->foreignId('resolver_user_id')->constrained('users')->onDelete('cascade');
+   $table->date('received_at')->nullable(); // Tgl Terima CAR PAR
+   $table->text('temporary_repair')->nullable(); // Tindakan sementara jika ada
+   $table->text('cause_analysis'); // Analisa Penyebab
+   $table->text('correction_action'); // Tindakan Perbaikan dan Pencegahan
+   $table->string('pic'); // PIC
+   $table->date('execution_time')->nullable(); // Waktu Pelaksanaan
+   $table->string('document_revised')->nullable(); // Dokumen direvisi (TKI, Formulir, dll)
+   $table->date('target_verification_date')->nullable(); // Target Waktu Verifikasi
+   $table->timestamps();
+});
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
-
-## Security Vulnerabilities
-
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
-
-## License
-
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+Schema::create('approvals', function (Blueprint $table) {
+   $table->id();
+   $table->foreignId('request_id')->constrained('requests')->onDelete('cascade');
+   $table->foreignId('approver_user_id')->constrained('users')->onDelete('cascade');
+   $table->enum('stage', [
+         'itm_initial_review', // pertama
+         'executor_response', // executor input
+         'requester_review', // requester review
+         'itm_final_review' // final approve
+   ]);
+   $table->timestamp('approved_at')->nullable();
+   $table->string('qr_code_path')->nullable(); // path file QR signature
+   $table->enum('verification_status', ['Close', 'Follow Up'])->nullable();
+   $table->date('next_verification_target')->nullable(); // Jika follow up
+   $table->timestamps();
+});
+```

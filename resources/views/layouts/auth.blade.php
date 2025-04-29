@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="{{ env('APP_LOCALE', 'id') }}">
 <head>
     <meta charset="UTF-8">
     <title>@yield('title', 'Sistem Pengaduan')</title>

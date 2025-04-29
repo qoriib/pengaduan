@@ -25,13 +25,13 @@ return new class extends Migration
             $table->date('due_date')->nullable(); // Batas waktu jawab
             $table->string('illustration_photo_path')->nullable(); // Upload foto/ilustrasi
             $table->enum('status', [
-                'waiting_itm_review',
+                'waiting_itm_initial_review',
                 'waiting_executor',
                 'waiting_requester_review',
-                'waiting_itm_final',
+                'waiting_itm_final_review',
                 'completed',
                 'rejected'
-            ])->default('waiting_itm_review');
+            ])->default('waiting_itm_initial_review');
             $table->timestamps();
         });
     }

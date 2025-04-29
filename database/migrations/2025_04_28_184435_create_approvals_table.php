@@ -16,10 +16,10 @@ return new class extends Migration
             $table->foreignId('request_id')->constrained('requests')->onDelete('cascade');
             $table->foreignId('approver_user_id')->constrained('users')->onDelete('cascade');
             $table->enum('stage', [
-                'itm_review', // pertama
+                'itm_initial_review', // pertama
                 'executor_response', // executor input
                 'requester_review', // requester review
-                'itm_final' // final approve
+                'itm_final_review' // final approve
             ]);
             $table->timestamp('approved_at')->nullable();
             $table->string('qr_code_path')->nullable(); // path file QR signature

@@ -9,6 +9,8 @@ class PtppRequest extends Model
 {
     use HasFactory;
 
+    protected $table = 'requests';
+
     protected $fillable = [
         'no_form',
         'request_date',

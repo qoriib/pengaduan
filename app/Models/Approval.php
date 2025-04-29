@@ -9,6 +9,8 @@ class Approval extends Model
 {
     use HasFactory;
 
+    protected $table = 'approvals';
+
     protected $fillable = [
         'request_id',
         'approver_user_id',
