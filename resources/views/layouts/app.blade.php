@@ -25,6 +25,9 @@
                     <a class="nav-link text-white" href="{{ route('ptpp-requests.report.show') }}">
                         Laporan PTPP
                     </a>
+                    <a class="nav-link text-white" href="{{ route('mwt-requests.show') }}">
+                        Laporan MWT
+                    </a>
                     <a class="nav-link text-white" href="{{ route('users.show') }}">
                         Kelola Pengguna
                     </a>
@@ -33,6 +36,9 @@
                 <nav class="nav">
                     <a class="nav-link text-white" href="{{ route('ptpp-requests.show') }}">
                         Permohonan PTPP
+                    </a>
+                    <a class="nav-link text-white" href="{{ route('mwt-requests.show') }}">
+                        Laporan MWT
                     </a>
                 </nav>
             @endif

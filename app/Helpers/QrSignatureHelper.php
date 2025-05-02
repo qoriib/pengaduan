@@ -2,10 +2,6 @@
 
 namespace App\Helpers;
 
-use Illuminate\Support\Facades\Storage;
-use SimpleSoftwareIO\QrCode\Facades\QrCode;
-use Illuminate\Support\Str;
-
 class QrSignatureHelper
 {
     /**
@@ -33,5 +29,27 @@ class QrSignatureHelper
         $qrContent = json_encode($data, JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES);
 
         return $qrContent;
+    }
+
+    /**
+     * Generate QR signature content for a user involved in MWT.
+     *
+     * @param  int  $reportId
+     * @param  \App\Models\User  $user
+     * @param  string  $type  (acknowledged | approved | participant)
+     * @return string  JSON QR content
+     */
+    public static function generateForMWT($reportId, $user, string $type): string
+    {
+        $data = [
+            'report_id' => $reportId,
+            'type' => $type,
+            'name' => $user->name,
+            'role' => $user->role,
+            'signed_at' => now()->toDateTimeString(),
+            'hash' => sha1($reportId . $user->id . $type . now()),
+        ];
+
+        return json_encode($data, JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES);
     }
 }

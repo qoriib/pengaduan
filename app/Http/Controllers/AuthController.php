@@ -21,7 +21,7 @@ class AuthController extends Controller
 
         if (Auth::attempt($credentials)) {
             $request->session()->regenerate();
-            return redirect()->intended('/requests'); // Ganti sesuai dashboard
+            return redirect()->route('ptpp-requests.show'); // Ganti sesuai dashboard
         }
 
         return back()->withErrors([
