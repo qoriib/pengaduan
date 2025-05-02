@@ -25,6 +25,9 @@
                     <a class="nav-link text-white" href="{{ route('ptpp-requests.report.show') }}">
                         Laporan PTPP
                     </a>
+                    <a class="nav-link text-white" href="{{ route('users.show') }}">
+                        Kelola Pengguna
+                    </a>
                 </nav>
             @else
                 <nav class="nav">
