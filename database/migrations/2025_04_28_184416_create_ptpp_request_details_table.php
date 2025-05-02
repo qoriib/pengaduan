@@ -11,9 +11,9 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('request_details', function (Blueprint $table) {
+        Schema::create('ptpp_request_details', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('request_id')->constrained('requests')->onDelete('cascade');
+            $table->foreignId('request_id')->constrained('ptpp_requests')->onDelete('cascade');
             $table->foreignId('resolver_user_id')->constrained('users')->onDelete('cascade');
             $table->date('received_at')->nullable(); // Tgl Terima CAR PAR
             $table->text('temporary_repair')->nullable(); // Tindakan sementara jika ada
@@ -32,6 +32,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('request_details');
+        Schema::dropIfExists('ptpp_request_details');
     }
 };

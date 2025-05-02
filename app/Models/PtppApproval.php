@@ -9,7 +9,7 @@ class PtppApproval extends Model
 {
     use HasFactory;
 
-    protected $table = 'approvals';
+    protected $table = 'ptpp_approvals';
 
     protected $fillable = [
         'request_id',

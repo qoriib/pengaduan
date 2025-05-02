@@ -9,7 +9,7 @@ class PtppRequest extends Model
 {
     use HasFactory;
 
-    protected $table = 'requests';
+    protected $table = 'ptpp_requests';
 
     protected $fillable = [
         'no_form',

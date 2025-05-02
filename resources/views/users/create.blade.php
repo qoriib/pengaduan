@@ -1,5 +1,7 @@
 @extends('layouts.app')
 
+@section('title', 'Tambah Pengguna')
+
 @section('content')
     <h2 class="mb-4">Tambah Pengguna</h2>
 
