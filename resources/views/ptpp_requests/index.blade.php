@@ -1,11 +1,11 @@
 @extends('layouts.app')
 
-@section('title', 'Daftar Permohonan')
+@section('title', 'Daftar Permohonan PTPP')
 
 @section('content')
     <div class="d-flex justify-content-between align-items-center mb-4">
-        <h2 class="mb-0">Permohonan</h2>
-        <a href="{{ route('requests.create.show') }}" class="btn btn-success">
+        <h2 class="mb-0">Permohonan PTPP</h2>
+        <a href="{{ route('ptpp-requests.create.show') }}" class="btn btn-success">
             Ajukan
         </a>
     </div>
@@ -62,18 +62,18 @@
                                         <td class="font-monospace text-center">{{ $request->created_at->format('d/m/Y') }}</td>
                                         <td class="text-nowrap text-center">
                                             @if ($request->status === 'waiting_requester_review')
-                                            <form action="{{ route('approval.requester-review-approve.handle', $request->id) }}" method="POST" class="d-inline">
+                                            <form action="{{ route('ptpp-approval.requester-review-approve.handle', $request->id) }}" method="POST" class="d-inline">
                                                 @csrf
                                                 @method('PUT')
                                                 <button type="submit" class="btn btn-sm btn-success">Approve</button>
                                             </form>
-                                            <form action="{{ route('approval.requester-review-reject.handle', $request->id) }}" method="POST" class="d-inline">
+                                            <form action="{{ route('ptpp-approval.requester-review-reject.handle', $request->id) }}" method="POST" class="d-inline">
                                                 @csrf
                                                 @method('PUT')
                                                 <button type="submit" class="btn btn-sm btn-danger">Reject</button>
                                             </form>
                                         @endif
-                                            <a href="{{ route('requests.detail.show', $request->id) }}" class="btn btn-sm btn-outline-info">Detail</a>
+                                            <a href="{{ route('ptpp-requests.detail.show', $request->id) }}" class="btn btn-sm btn-outline-info">Detail</a>
                                         </td>
                                     </tr>
                                 @endforeach
@@ -137,11 +137,11 @@
                                         <td class="font-monospace text-center">{{ $request->created_at->format('d/m/Y') }}</td>
                                         <td class="text-nowrap text-center">
                                             @if ($request->status === 'waiting_executor' && $request->to_user_id === Auth::id())
-                                                <a href="{{ route('request-details.create.show', $request->id) }}" class="btn btn-sm btn-primary">
+                                                <a href="{{ route('ptpp-request-details.create.show', $request->id) }}" class="btn btn-sm btn-primary">
                                                     Tindak
                                                 </a>
                                             @endif
-                                            <a href="{{ route('requests.detail.show', $request->id) }}" class="btn btn-sm btn-outline-info">Detail</a>
+                                            <a href="{{ route('ptpp-requests.detail.show', $request->id) }}" class="btn btn-sm btn-outline-info">Detail</a>
                                         </td>
                                     </tr>
                                 @endforeach

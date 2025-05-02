@@ -1,9 +1,9 @@
 @extends('layouts.app')
 
-@section('title', 'Persetujuan Permohonan (ITM)')
+@section('title', 'Persetujuan PTPP (ITM)')
 
 @section('content')
-    <h2 class="mb-4">Persetujuan Permohonan (ITM)</h2>
+    <h2 class="mb-4">Persetujuan PTPP (ITM)</h2>
 
     <div class="vstack gap-4">
         <div class="card">
@@ -35,12 +35,12 @@
                                         <td>{{ $request->fromUser->name }}</td>
                                         <td>{{ $request->toUser->name }}</td>
                                         <td class="text-nowrap">
-                                            <form action="{{ route('approval.itm-initial-review-approve.handle', $request->id) }}" method="POST" class="d-inline">
+                                            <form action="{{ route('ptpp-approval.itm-initial-review-approve.handle', $request->id) }}" method="POST" class="d-inline">
                                                 @csrf
                                                 @method('PUT')
                                                 <button type="submit" class="btn btn-success btn-sm">Approve</button>
                                             </form>
-                                            <form action="{{ route('approval.itm-initial-review-reject.handle', $request->id) }}" method="POST" class="d-inline">
+                                            <form action="{{ route('ptpp-approval.itm-initial-review-reject.handle', $request->id) }}" method="POST" class="d-inline">
                                                 @csrf
                                                 @method('PUT')
                                                 <button type="submit" class="btn btn-danger btn-sm">Reject</button>
@@ -83,12 +83,12 @@
                                         <td>{{ $request->fromUser->name }}</td>
                                         <td>{{ $request->toUser->name }}</td>
                                         <td class="text-nowrap">
-                                            <form action="{{ route('approval.itm-final-review-approve.handle', $request->id) }}" method="POST" class="d-inline">
+                                            <form action="{{ route('ptpp-approval.itm-final-review-approve.handle', $request->id) }}" method="POST" class="d-inline">
                                                 @csrf
                                                 @method('PUT')
                                                 <button type="submit" class="btn btn-success btn-sm">Final Approve</button>
                                             </form>
-                                            <form action="{{ route('approval.itm-final-review-reject.handle', $request->id) }}" method="POST" class="d-inline">
+                                            <form action="{{ route('ptpp-approval.itm-final-review-reject.handle', $request->id) }}" method="POST" class="d-inline">
                                                 @csrf
                                                 @method('PUT')
                                                 <button type="submit" class="btn btn-danger btn-sm">Reject</button>

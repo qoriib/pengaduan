@@ -3,16 +3,16 @@
 namespace Database\Factories;
 
 use App\Models\PtppRequest;
-use App\Models\RequestDetail;
+use App\Models\PtppRequestDetail;
 use App\Models\User;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
- * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\RequestDetail>
+ * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\PtppRequestDetail>
  */
-class RequestDetailFactory extends Factory
+class PtppRequestDetailFactory extends Factory
 {
-    protected $model = RequestDetail::class;
+    protected $model = PtppRequestDetail::class;
 
     public function definition()
     {

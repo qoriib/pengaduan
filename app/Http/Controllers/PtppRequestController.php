@@ -2,12 +2,14 @@
 
 namespace App\Http\Controllers;
 
+use App\Exports\PtppRequestsExport;
 use App\Models\PtppRequest;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Maatwebsite\Excel\Facades\Excel;
 
-class RequestController extends Controller
+class PtppRequestController extends Controller
 {
     public function showUserRequests()
     {
@@ -16,20 +18,20 @@ class RequestController extends Controller
         $myRequests = PtppRequest::where('from_user_id', $userId)->get();
         $requestsToMe = PtppRequest::where('to_user_id', $userId)->get();
 
-        return view('requests.index', compact('myRequests', 'requestsToMe'));
+        return view('ptpp_requests.index', compact('myRequests', 'requestsToMe'));
     }
 
     public function showDetail($id)
     {
         $request = PtppRequest::with(['fromUser', 'toUser', 'requestDetail', 'approvals.approverUser'])->findOrFail($id);
 
-        return view('requests.detail', compact('request'));
+        return view('ptpp_requests.detail', compact('request'));
     }
 
     public function showCreate()
     {
         $users = User::where('role', '!=', 'ITM')->get();
-        return view('requests.create', compact('users'));
+        return view('ptpp_requests.create', compact('users'));
     }
 
     public function handleCreate(Request $request)
@@ -65,11 +67,26 @@ class RequestController extends Controller
             'status' => 'waiting_itm_initial_review',
         ]);
 
-        return redirect()->route('requests.show')->with('success', 'Request berhasil dikirim, menunggu ITM review.');
+        return redirect()->route('ptpp_requests.show')->with('success', 'Request berhasil dikirim, menunggu ITM review.');
     }
 
     public function printRequest(PtppRequest $request)
     {
-        return view('requests.print', compact('request'));
+        return view('ptpp_requests.print', compact('request'));
+    }
+
+    public function showReport()
+    {
+        $requests = PtppRequest::with(['fromUser', 'toUser', 'requestDetail', 'approvals'])
+            ->where('status', 'completed')
+            ->latest()
+            ->paginate(20);
+
+        return view('ptpp_requests.export', compact('requests'));
+    }
+
+    public function exportReport()
+    {
+        return Excel::download(new PtppRequestsExport, 'ptpp_requests.xlsx');
     }
 }

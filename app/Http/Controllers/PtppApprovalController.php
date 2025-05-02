@@ -3,19 +3,19 @@
 namespace App\Http\Controllers;
 
 use App\Helpers\QrSignatureHelper;
-use App\Models\Approval;
+use App\Models\PtppApproval;
 use App\Models\PtppRequest;
 use Illuminate\Support\Facades\Auth;
 
-class ApprovalController extends Controller
+class PtppApprovalController extends Controller
 {
 
-    public function showITMApproval()
+    public function showITMPtppApproval()
     {
         $initialRequests = PtppRequest::where('status', 'waiting_itm_initial_review')->get();
         $finalRequests = PtppRequest::where('status', 'waiting_itm_final_review')->get();
 
-        return view('approval.index', compact('initialRequests', 'finalRequests'));
+        return view('ptpp_approval.index', compact('initialRequests', 'finalRequests'));
     }
 
     public function handleITMInitialReviewApprove($id)
@@ -25,7 +25,7 @@ class ApprovalController extends Controller
             'status' => 'waiting_executor'
         ]);
 
-        Approval::create([
+        PtppApproval::create([
             'request_id' => $request->id,
             'approver_user_id' => Auth::id(),
             'stage' => 'itm_initial_review',
@@ -58,7 +58,7 @@ class ApprovalController extends Controller
             'status' => 'completed',
         ]);
 
-        Approval::create([
+        PtppApproval::create([
             'request_id' => $request->id,
             'approver_user_id' => Auth::id(),
             'stage' => 'itm_final_review',
@@ -82,7 +82,7 @@ class ApprovalController extends Controller
             'status' => 'rejected',
         ]);
 
-        Approval::create([
+        PtppApproval::create([
             'request_id' => $request->id,
             'approver_user_id' => Auth::id(),
             'stage' => 'itm_final_review',
@@ -101,7 +101,7 @@ class ApprovalController extends Controller
             'status' => 'waiting_itm_final_review',
         ]);
 
-        Approval::create([
+        PtppApproval::create([
             'request_id' => $request->id,
             'approver_user_id' => Auth::id(),
             'stage' => 'requester_review',
@@ -118,7 +118,7 @@ class ApprovalController extends Controller
             'status' => 'rejected',
         ]);
 
-        Approval::create([
+        PtppApproval::create([
             'request_id' => $request->id,
             'approver_user_id' => Auth::id(),
             'stage' => 'requester_review',

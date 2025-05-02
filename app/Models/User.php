@@ -59,6 +59,6 @@ class User extends Authenticatable
 
     public function approvals()
     {
-        return $this->hasMany(Approval::class, 'approver_user_id');
+        return $this->hasMany(PtppApproval::class, 'approver_user_id');
     }
 }

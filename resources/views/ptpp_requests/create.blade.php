@@ -1,11 +1,11 @@
 @extends('layouts.app')
 
-@section('title', 'Permohonan Baru')
+@section('title', 'Permohonan PTPP Baru')
 
 @section('content')
-    <h2 class="mb-4">Permohonan Baru</h2>
+    <h2 class="mb-4">Permohonan PTPP Baru</h2>
 
-    <form action="{{ route('requests.create.handle') }}" method="POST" enctype="multipart/form-data" class="vstack gap-3">
+    <form action="{{ route('ptpp-requests.create.handle') }}" method="POST" enctype="multipart/form-data" class="vstack gap-3">
         @csrf
         <div>
             <label for="to_user_id" class="form-label">Kepada / Fungsi</label>
@@ -58,7 +58,7 @@
         </div>
         <div>
             <button type="submit" class="btn btn-success">Ajukan</button>
-            <a href="{{ route('requests.show') }}" class="btn btn-secondary">Kembali</a>
+            <a href="{{ route('ptpp-requests.show') }}" class="btn btn-secondary">Kembali</a>
         </div>
     </form>
 @endsection

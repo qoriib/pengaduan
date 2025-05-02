@@ -2,9 +2,9 @@
 
 namespace Database\Seeders;
 
-use App\Models\Approval;
+use App\Models\PtppApproval;
 use App\Models\PtppRequest;
-use App\Models\RequestDetail;
+use App\Models\PtppRequestDetail;
 use App\Models\User;
 use Illuminate\Database\Seeder;
 use App\Helpers\QrSignatureHelper;
@@ -25,7 +25,7 @@ class PtppRequestSeeder extends Seeder
             $stage = rand(1, 5); // Random tahap: 1 = hanya request, 5 = completed
 
             if ($stage >= 1) {
-                Approval::create([
+                PtppApproval::create([
                     'request_id' => $request->id,
                     'approver_user_id' => $itmUser->id,
                     'stage' => 'itm_initial_review',
@@ -36,12 +36,12 @@ class PtppRequestSeeder extends Seeder
             }
 
             if ($stage >= 2) {
-                RequestDetail::factory()->create([
+                PtppRequestDetail::factory()->create([
                     'request_id' => $request->id,
                     'resolver_user_id' => $to->id,
                 ]);
 
-                Approval::create([
+                PtppApproval::create([
                     'request_id' => $request->id,
                     'approver_user_id' => $from->id,
                     'stage' => 'executor_response',
@@ -53,7 +53,7 @@ class PtppRequestSeeder extends Seeder
             }
 
             if ($stage >= 3) {
-                Approval::create([
+                PtppApproval::create([
                     'request_id' => $request->id,
                     'approver_user_id' => $from->id,
                     'stage' => 'requester_review',
@@ -65,7 +65,7 @@ class PtppRequestSeeder extends Seeder
             }
 
             if ($stage >= 4) {
-                Approval::create([
+                PtppApproval::create([
                     'request_id' => $request->id,
                     'approver_user_id' => $itmUser->id,
                     'stage' => 'itm_final_review',

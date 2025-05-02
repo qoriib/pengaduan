@@ -3,13 +3,13 @@
 namespace App\Http\Controllers;
 
 use App\Helpers\QrSignatureHelper;
-use App\Models\Approval;
+use App\Models\PtppApproval;
 use App\Models\PtppRequest;
-use App\Models\RequestDetail;
+use App\Models\PtppRequestDetail;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
-class RequestDetailController extends Controller
+class PtppRequestDetailController extends Controller
 {
     public function showCreate(PtppRequest $request)
     {
@@ -17,7 +17,7 @@ class RequestDetailController extends Controller
             abort(403, 'Unauthorized');
         }
 
-        return view('request_details.create', compact('request'));
+        return view('ptpp_request_details.create', compact('request'));
     }
 
     public function handleCreate(Request $req, PtppRequest $request)
@@ -36,9 +36,9 @@ class RequestDetailController extends Controller
         $validated['request_id'] = $request->id;
         $validated['resolver_user_id'] = Auth::id();
 
-        RequestDetail::create($validated);
+        PtppRequestDetail::create($validated);
 
-        Approval::create([
+        PtppApproval::create([
             'request_id' => $request->id,
             'approver_user_id' => Auth::id(),
             'stage' => 'executor_response',
@@ -48,6 +48,6 @@ class RequestDetailController extends Controller
 
         $request->update(['status' => 'waiting_requester_review']);
 
-        return redirect()->route('requests.show')->with('success', 'Detail perbaikan berhasil dikirim.');
+        return redirect()->route('ptpp-requests.show')->with('success', 'Detail perbaikan berhasil dikirim.');
     }
 }

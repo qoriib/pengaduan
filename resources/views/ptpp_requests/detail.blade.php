@@ -1,9 +1,9 @@
 @extends('layouts.app')
 
-@section('title', 'Detail Permintaan')
+@section('title', 'Detail Permintaan PTPP')
 
 @section('content')
-    <h2 class="mb-4">Detail Permintaan - <span class="font-monospace">{{ $request->no_form }}</span></h2>
+    <h2 class="mb-4">Detail Permintaan PTPP - <span class="font-monospace">{{ $request->no_form }}</span></h2>
     <div class="vstack gap-4 mb-4">
         <div class="card">
             <div class="card-header">Informasi Permintaan</div>
@@ -142,7 +142,7 @@
             </div>
         @endif
         <div class="card">
-            <div class="card-header">Riwayat Approval</div>
+            <div class="card-header">Riwayat PtppApproval</div>
             <div class="card-body">
                 @forelse($request->approvals as $approval)
                     <div class="border rounded p-3 mb-3 shadow-sm">
@@ -207,7 +207,7 @@
         </div>
     </div>
     <div class="hstack gap-2">
-        <a href="{{ route('requests.show') }}" class="btn btn-secondary">Kembali</a>
-        <a href="{{ route('requests.print', $request->id) }}" class="btn btn-info">Print</a>
+        <a href="{{ route('ptpp-requests.show') }}" class="btn btn-secondary">Kembali</a>
+        <a href="{{ route('ptpp-requests.print', $request->id) }}" class="btn btn-info">Print</a>
     </div>
 @endsection

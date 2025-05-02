@@ -11,30 +11,34 @@
 <body>
     <header class="navbar navbar-dark bg-dark">
         <div class="container d-flex justify-content-between align-items-center g-5">
-            <a class="navbar-brand" href="{{ route('requests.show') }}">
-                Aplikasi PTPP
-            </a>
+            <span class="text-white me-3">
+                {{ Auth::user()->name ?? 'Guest' }}
+            </span>
             @if (Auth::user() && Auth::user()->role === 'ITM')
-                <nav class="nav gap-3">
-                    <a class="nav-link text-white" href="{{ route('requests.show') }}">
-                        Permohonan
+                <nav class="nav">
+                    <a class="nav-link text-white" href="{{ route('ptpp-requests.show') }}">
+                        Permohonan PTPP
                     </a>
-                    <a class="nav-link text-white" href="{{ route('approval.itm-approval.show') }}">
-                        Persetujuan
+                    <a class="nav-link text-white" href="{{ route('ptpp-approval.itm-approval.show') }}">
+                        Persetujuan PTPP
+                    </a>
+                    <a class="nav-link text-white" href="{{ route('ptpp-requests.report.show') }}">
+                        Laporan PTPP
+                    </a>
+                </nav>
+            @else
+                <nav class="nav">
+                    <a class="nav-link text-white" href="{{ route('ptpp-requests.show') }}">
+                        Permohonan PTPP
                     </a>
                 </nav>
             @endif
-            <div class="d-flex align-items-center">
-                <span class="text-white me-3">
-                    {{ Auth::user()->name ?? 'Guest' }}
-                </span>
-                <form action="{{ route('logout.handle') }}" method="POST" class="d-inline">
-                    @csrf
-                    <button type="submit" class="btn btn-outline-light btn-sm">
-                        Logout
-                    </button>
-                </form>
-            </div>
+            <form action="{{ route('logout.handle') }}" method="POST" class="d-inline">
+                @csrf
+                <button type="submit" class="btn btn-outline-light btn-sm">
+                    Logout
+                </button>
+            </form>
         </div>
     </header>
     

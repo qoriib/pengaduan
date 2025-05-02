@@ -1,11 +1,11 @@
 @extends('layouts.app')
 
-@section('title', 'Rincian Tindakan')
+@section('title', 'Rincian Tindakan PTPP')
 
 @section('content')
-    <h2 class="mb-4">Rincian Tindakan</h2>
+    <h2 class="mb-4">Rincian Tindakan PTPP</h2>
 
-    <form action="{{ route('request-details.create.handle', $request->id) }}" method="POST" class="vstack gap-3">
+    <form action="{{ route('ptpp-request-details.create.handle', $request->id) }}" method="POST" class="vstack gap-3">
         @csrf
         <div>
             <label class="form-label">Tanggal Terima</label>
@@ -48,7 +48,7 @@
         </div>
         <div>
             <button type="submit" class="btn btn-primary">Kirim</button>
-            <a href="{{ route('requests.show') }}" class="btn btn-secondary">Kembali</a>
+            <a href="{{ route('ptpp-requests.show') }}" class="btn btn-secondary">Kembali</a>
         </div>
     </form>
 @endsection

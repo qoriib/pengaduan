@@ -1,6 +1,6 @@
 @extends('layouts.print')
 
-@section('title', 'Print Permohonan')
+@section('title', 'Print Dokumen PTPP')
 
 @section('content')
 <style>
@@ -227,7 +227,7 @@
                 $approvalRequester = $request->approvals()->where('stage', 'requester_review')->first();
             @endphp
             <td colspan="1">
-                <span class="text-nowrap">Approval Pemohon / Auditor:</span><br>
+                <span class="text-nowrap">PtppApproval Pemohon / Auditor:</span><br>
                 @if ($approvalRequester)
                     <div id="qrcode-requester-review"></div>
                     <script>
@@ -246,7 +246,7 @@
 </div>
 
 <div class="no-print mt-4">
-    <a href="{{ route('requests.detail.show', $request->id) }}" class="btn btn-secondary">Kembali</a>
+    <a href="{{ route('ptpp-requests.detail.show', $request->id) }}" class="btn btn-secondary">Kembali</a>
     <button onclick="window.print()" class="btn btn-primary">Print</button>
 </div>
 @endsection
